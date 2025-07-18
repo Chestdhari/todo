@@ -1,19 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
+const Navbar = ({ onLogout }) => {
   return (
-    <nav>
+    <div className="navbar">
       <Link to="/">Dashboard</Link>
       <Link to="/login">Login</Link>
       <Link to="/register">Register</Link>
-      <button onClick={handleLogout}>Logout</button>
-    </nav>
+      <button className="logout-btn" onClick={onLogout}>
+        Logout
+      </button>
+    </div>
   );
 };
 

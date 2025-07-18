@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -15,6 +16,7 @@ const Dashboard = () => {
   }, []);
 
   const addTask = async () => {
+    if (!newTask.trim()) return;
     await API.post("/tasks", { title: newTask });
     setNewTask("");
     fetchTasks();
@@ -31,30 +33,43 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h2>Todo Dashboard</h2>
-      <input
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        placeholder="New task"
-      />
-      <button onClick={addTask}>Add</button>
-
-      <ul>
-        {tasks.map((task) => (
-          <li key={task._id}>
-            <span
-              onClick={() => toggleTask(task)}
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              {task.title}
-            </span>
-            <button onClick={() => deleteTask(task._id)}>❌</button>
-          </li>
-        ))}
-      </ul>
+    <div className="page-wrapper">
+           {" "}
+      <div className="dashboard-container">
+                <h2>Todo Dashboard</h2>       {" "}
+        <div className="task-input">
+                   {" "}
+          <input
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="New task"
+          />
+                    <button onClick={addTask}>Add</button>       {" "}
+        </div>
+               {" "}
+        <ul className="task-list">
+                   {" "}
+          {tasks.map((task) => (
+            <li key={task._id}>
+                           {" "}
+              <span
+                onClick={() => toggleTask(task)}
+                style={{
+                  textDecoration: task.completed ? "line-through" : "none",
+                }}
+              >
+                                {task.title}             {" "}
+              </span>
+                           {" "}
+              <button onClick={() => deleteTask(task._id)}>❌</button>         
+               {" "}
+            </li>
+          ))}
+                 {" "}
+        </ul>
+             {" "}
+      </div>
+         {" "}
     </div>
   );
 };
